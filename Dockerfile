@@ -10,5 +10,6 @@ COPY . .
 # Expose the port
 EXPOSE ${PORT:-8080}
 
-# Serve the Week5 directory
-CMD php -S 0.0.0.0:${PORT:-8080} -t Week5
+# Initialize database and serve the Week5 directory
+CMD php init-db.php && php -S 0.0.0.0:${PORT:-8080} -t Week5
+
