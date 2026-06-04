@@ -14,13 +14,13 @@ if (isset($_POST['update_cart'])) {
             }
         }
     }
-    redirect('/pitstop/cart.php');
+    redirect('/cart.php');
 }
 
 if (isset($_GET['remove'])) {
     $pid = (int)$_GET['remove'];
     unset($_SESSION['cart'][$pid]);
-    redirect('/pitstop/cart.php');
+    redirect('/cart.php');
 }
 
 $cart_items = [];

@@ -18,19 +18,19 @@ $recent_orders = $conn->query("SELECT o.*, u.name AS user_name FROM orders o LEF
 <title>Admin — PitStop Parts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/pitstop/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <div class="admin-wrapper">
     <aside class="admin-sidebar">
         <div class="sidebar-logo">Pit<span>Stop</span></div>
         <nav class="sidebar-nav">
-            <a href="/pitstop/admin/index.php" class="active">Dashboard</a>
-            <a href="/pitstop/admin/products.php">Products</a>
-            <a href="/pitstop/admin/add-product.php">Add Product</a>
-            <a href="/pitstop/admin/orders.php">Orders</a>
-            <a href="/pitstop/index.php">View Store</a>
-            <a href="/pitstop/logout.php">Logout</a>
+            <a href="/admin/index.php" class="active">Dashboard</a>
+            <a href="/admin/products.php">Products</a>
+            <a href="/admin/add-product.php">Add Product</a>
+            <a href="/admin/orders.php">Orders</a>
+            <a href="/index.php">View Store</a>
+            <a href="/logout.php">Logout</a>
         </nav>
     </aside>
     <main class="admin-main">

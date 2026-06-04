@@ -18,13 +18,13 @@ function is_admin() {
 
 function require_login() {
     if (!is_logged_in()) {
-        redirect('/pitstop/login.php');
+        redirect('/login.php');
     }
 }
 
 function require_admin() {
     if (!is_admin()) {
-        redirect('/pitstop/index.php');
+        redirect('/index.php');
     }
 }
 

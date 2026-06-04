@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
-if (is_logged_in()) redirect('/pitstop/index.php');
+if (is_logged_in()) redirect('/index.php');
 
 $error = '';
 
@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['role'] = $user['role'];
             if ($user['role'] === 'admin') {
-                redirect('/pitstop/admin/index.php');
+                redirect('/admin/index.php');
             } else {
-                redirect('/pitstop/index.php');
+                redirect('/index.php');
             }
         } else {
             $error = 'Invalid email or password.';
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <title>Login — PitStop Parts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/pitstop/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <div class="auth-page">
@@ -61,10 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn-submit">Sign In</button>
         </form>
         <div class="auth-switch">
-            Don't have an account? <a href="/pitstop/register.php">Register</a>
+            Don't have an account? <a href="/register.php">Register</a>
         </div>
         <div class="auth-switch" style="margin-top:12px;">
-            <a href="/pitstop/index.php" style="color:var(--taupe);">Back to Store</a>
+            <a href="/index.php" style="color:var(--taupe);">Back to Store</a>
         </div>
     </div>
 </div>

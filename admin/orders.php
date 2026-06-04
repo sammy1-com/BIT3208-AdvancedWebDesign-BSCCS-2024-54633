@@ -8,7 +8,7 @@ if (isset($_POST['update_status'])) {
     $oid = (int)$_POST['order_id'];
     $status = $conn->real_escape_string($_POST['status']);
     $conn->query("UPDATE orders SET status = '$status' WHERE id = $oid");
-    redirect('/pitstop/admin/orders.php');
+    redirect('/admin/orders.php');
 }
 
 $view_id = (int)($_GET['id'] ?? 0);
@@ -32,19 +32,19 @@ $orders = $conn->query("SELECT o.*, u.name AS user_name FROM orders o LEFT JOIN 
 <title>Orders — Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/pitstop/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <div class="admin-wrapper">
     <aside class="admin-sidebar">
         <div class="sidebar-logo">Pit<span>Stop</span></div>
         <nav class="sidebar-nav">
-            <a href="/pitstop/admin/index.php">Dashboard</a>
-            <a href="/pitstop/admin/products.php">Products</a>
-            <a href="/pitstop/admin/add-product.php">Add Product</a>
-            <a href="/pitstop/admin/orders.php" class="active">Orders</a>
-            <a href="/pitstop/index.php">View Store</a>
-            <a href="/pitstop/logout.php">Logout</a>
+            <a href="/admin/index.php">Dashboard</a>
+            <a href="/admin/products.php">Products</a>
+            <a href="/admin/add-product.php">Add Product</a>
+            <a href="/admin/orders.php" class="active">Orders</a>
+            <a href="/index.php">View Store</a>
+            <a href="/logout.php">Logout</a>
         </nav>
     </aside>
     <main class="admin-main">
@@ -54,7 +54,7 @@ $orders = $conn->query("SELECT o.*, u.name AS user_name FROM orders o LEFT JOIN 
         <div class="admin-content">
             <?php if ($order): ?>
             <div style="margin-bottom:32px;">
-                <a href="/pitstop/admin/orders.php" class="btn-admin btn-admin-dark" style="margin-bottom:24px;display:inline-block;">Back to All Orders</a>
+                <a href="/admin/orders.php" class="btn-admin btn-admin-dark" style="margin-bottom:24px;display:inline-block;">Back to All Orders</a>
                 <div style="display:flex;gap:32px;margin-bottom:24px;flex-wrap:wrap;">
                     <div>
                         <div style="font-family:var(--font-ui);font-size:9px;letter-spacing:2px;color:var(--taupe);text-transform:uppercase;margin-bottom:4px;">Order</div>
@@ -92,7 +92,7 @@ $orders = $conn->query("SELECT o.*, u.name AS user_name FROM orders o LEFT JOIN 
                         <?php foreach ($order_items as $item): ?>
                         <tr>
                             <td style="display:flex;align-items:center;gap:12px;">
-                                <img src="/pitstop/<?php echo htmlspecialchars($item['image_url']); ?>" style="width:48px;height:48px;object-fit:cover;border-radius:3px;">
+                                <img src="/<?php echo htmlspecialchars($item['image_url']); ?>" style="width:48px;height:48px;object-fit:cover;border-radius:3px;">
                                 <?php echo htmlspecialchars($item['product_name']); ?>
                             </td>
                             <td><?php echo format_price($item['price_at_purchase']); ?></td>

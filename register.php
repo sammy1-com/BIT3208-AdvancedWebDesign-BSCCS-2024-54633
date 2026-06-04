@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
-if (is_logged_in()) redirect('/pitstop/index.php');
+if (is_logged_in()) redirect('/index.php');
 
 $error = '';
 $success = '';
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <title>Register — PitStop Parts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/pitstop/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <div class="auth-page">
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         <?php if ($success): ?>
         <div class="alert-success"><?php echo htmlspecialchars($success); ?></div>
-        <div class="auth-switch"><a href="/pitstop/login.php">Proceed to Login</a></div>
+        <div class="auth-switch"><a href="/login.php">Proceed to Login</a></div>
         <?php else: ?>
         <form method="POST">
             <label class="form-label">Full Name</label>
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" name="confirm_password" class="form-control" required>
             <button type="submit" class="btn-submit">Create Account</button>
         </form>
-        <div class="auth-switch">Already have an account? <a href="/pitstop/login.php">Login</a></div>
+        <div class="auth-switch">Already have an account? <a href="/login.php">Login</a></div>
         <?php endif; ?>
     </div>
 </div>

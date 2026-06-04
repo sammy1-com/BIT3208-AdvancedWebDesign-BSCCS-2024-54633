@@ -5,7 +5,7 @@ require_once '../includes/functions.php';
 require_admin();
 
 $id = (int)($_GET['id'] ?? 0);
-if (!$id) redirect('/pitstop/admin/products.php');
+if (!$id) redirect('/admin/products.php');
 
 $result = $conn->query("SELECT image_url FROM products WHERE id = $id");
 $product = $result->fetch_assoc();
@@ -17,4 +17,4 @@ if ($product) {
     $conn->query("DELETE FROM products WHERE id = $id");
 }
 
-redirect('/pitstop/admin/products.php');
+redirect('/admin/products.php');
