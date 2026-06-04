@@ -21,15 +21,17 @@ $sql = file_get_contents(__DIR__ . '/sql/pitstop.sql');
 $sql = str_replace('CREATE DATABASE IF NOT EXISTS pitstop', "CREATE DATABASE IF NOT EXISTS $dbname", $sql);
 $sql = str_replace('USE pitstop', "USE $dbname", $sql);
 
-if ($conn->multi_query($sql)) {
-    echo "Database initialized successfully!\n";
-    while ($conn->more_results()) {
-        $conn->next_result();
+// Split by semicolon and execute each statement
+$statements = array_filter(array_map('trim', explode(';', $sql)));
+foreach ($statements as $statement) {
+    if (!empty($statement)) {
+        if (!$conn->query($statement)) {
+            echo "Error: " . $conn->error . "\n";
+        }
     }
-} else {
-    echo "Error initializing database: " . $conn->error . "\n";
 }
 
+echo "Database initialized successfully!\n";
 $conn->close();
 ?>
 
