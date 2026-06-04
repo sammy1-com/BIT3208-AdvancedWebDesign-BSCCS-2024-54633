@@ -5,5 +5,6 @@
         <p class="footer-copy">&copy; <?php echo date('Y'); ?> PitStop Parts. All rights reserved.</p>
     </div>
 </footer>
+<script src="/pitstop/assets/js/main.js"></script>
 </body>
 </html>

@@ -1,22 +1,38 @@
 <?php
-// WEEK 3 - Login: PHP form validation added (no real DB check yet)
+// WEEK 4 - Login: Full session-based authentication with real DB check
+if (session_status() === PHP_SESSION_NONE) session_start();
+require_once 'includes/db.php';
+require_once 'includes/functions.php';
+
+if (is_logged_in()) redirect('/pitstop/index.php');
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    // WEEK 3: PHP validation - check fields are not empty
     if (!$email || !$password) {
         $error = 'Please fill in all fields.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Please enter a valid email address.';
     } else {
-        // WEEK 3: Hardcoded credential check (real DB auth comes in Week 4)
-        if ($email === 'admin@pitstopparts.co.ke' && $password === 'password') {
-            // Redirect on "success" for demo purposes
-            header('Location: index.php?welcome=1');
-            exit;
+        // WEEK 4: Real DB query using prepared statement
+        $stmt = $conn->prepare("SELECT id, name, password, role FROM users WHERE email = ?");
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user   = $result->fetch_assoc();
+
+        if ($user && password_verify($password, $user['password'])) {
+            // WEEK 4: Store user data in $_SESSION
+            $_SESSION['user_id']   = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['role']      = $user['role'];
+
+            if ($user['role'] === 'admin') {
+                redirect('/pitstop/admin/index.php');
+            } else {
+                redirect('/pitstop/index.php');
+            }
         } else {
             $error = 'Invalid email or password.';
         }
@@ -38,47 +54,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="auth-box">
         <div class="auth-logo">Pit<span>Stop</span></div>
         <div class="auth-subtitle">Sign in to your account</div>
-
         <?php if ($error): ?>
         <div class="alert-error"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-
-        <!-- WEEK 3: JavaScript validation runs BEFORE PHP -->
-        <form method="POST" id="login-form" onsubmit="return validateLogin()">
+        <form method="POST">
             <label class="form-label">Email Address</label>
-            <input type="email" name="email" id="login-email" class="form-control" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+            <input type="email" name="email" class="form-control" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
             <label class="form-label">Password</label>
-            <input type="password" name="password" id="login-password" class="form-control" required>
+            <input type="password" name="password" class="form-control" required>
             <button type="submit" class="btn-submit">Sign In</button>
         </form>
-
-        <div class="auth-switch">
-            Don't have an account? <a href="register.php">Register</a>
-        </div>
-        <div class="auth-switch" style="margin-top:12px;">
-            <a href="index.php" style="color:var(--taupe);">Back to Store</a>
-        </div>
+        <div class="auth-switch">Don't have an account? <a href="register.php">Register</a></div>
+        <div class="auth-switch" style="margin-top:12px;"><a href="index.php" style="color:var(--taupe);">Back to Store</a></div>
     </div>
 </div>
-
-<script>
-// WEEK 3: JavaScript form validation
-function validateLogin() {
-    var email = document.getElementById('login-email').value.trim();
-    var password = document.getElementById('login-password').value;
-
-    if (!email || !password) {
-        alert('Please fill in all fields.');
-        return false;
-    }
-
-    if (password.length < 6) {
-        alert('Password must be at least 6 characters.');
-        return false;
-    }
-
-    return true; // Allow form to submit to PHP
-}
-</script>
 </body>
 </html>

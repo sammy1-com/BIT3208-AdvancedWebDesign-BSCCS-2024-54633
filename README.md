@@ -1,34 +1,32 @@
-# PitStop Parts — Week 3: JavaScript and PHP Basics
+# PitStop Parts — Week 4: Server-Side Components and Backend Development
 
 ## What was done this week
-- Added JavaScript form validation to Login (client-side before PHP)
-- Built password strength checker on Register using DOM events
-- Created AJAX dynamic model dropdown using Fetch API
-- Built hero image slideshow with JS
-- Added search tab switching (By Vehicle / By Part)
-- Added PHP server-side validation on Login and Register
-- Created `includes/functions.php` with helper functions
-- Set up `ajax/get-models.php` to return JSON data
+- Implemented full session-based authentication (login, register, logout)
+- Passwords hashed with `password_hash()` / verified with `password_verify()`
+- User data stored in `$_SESSION` after successful login
+- Header now shows "Hi, [Name] | Logout" when logged in, "Login | Register" when not
+- Homepage and Shop now query real database via `functions.php`
+- Cart built using PHP sessions (`$_SESSION['cart']`)
+- All DB queries use `mysqli` prepared statements to prevent SQL injection
 
-## What is new vs Week 2
-| Feature | Week 2 | Week 3 |
+## What is new vs Week 3
+| Feature | Week 3 | Week 4 |
 |---|---|---|
-| Login validation | None | JS + PHP validation |
-| Register validation | None | JS + PHP + password strength |
-| Hero slideshow | Static image | JS auto-cycling slideshow |
-| Model dropdown | Static | Dynamic via Fetch API/AJAX |
-| PHP helpers | None | `functions.php` with redirect, format_price |
-| DB | Not used | Connected, not yet queried for content |
+| Login | PHP validation only | Real DB auth + sessions |
+| Register | PHP validation only | Stores user to DB |
+| Logout | None | Destroys session |
+| Navigation | Static | Session-aware (login/logout) |
+| Categories/Products | Hardcoded arrays | Live from DB |
+| Cart | None | Session-based cart |
 
-## Files added this week
+## Admin credentials (for testing)
+- Email: `admin@pitstopparts.co.ke`
+- Password: `password`
+
+## New files this week
 | File | Purpose |
 |---|---|
-| `includes/functions.php` | PHP helper functions |
-| `includes/db.php` | mysqli database connection |
-| `ajax/get-models.php` | AJAX endpoint — returns models JSON |
-| `assets/js/main.js` | Hero slider, tabs, Fetch API, scroll reveal |
-
-## Technologies used
-- JavaScript (DOM, Events, Fetch API, IntersectionObserver)
-- PHP 8 (validation, POST handling, functions)
-- MySQL (connected but not yet queried for page content)
+| `logout.php` | Clears session, redirects home |
+| `cart.php` | Session-based cart management |
+| `includes/header.php` | Updated — session-aware nav |
+| `includes/functions.php` | Updated — real DB queries + auth helpers |

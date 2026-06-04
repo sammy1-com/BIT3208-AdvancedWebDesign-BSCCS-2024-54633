@@ -1,70 +1,78 @@
 <?php
-// WEEK 3 - Shop (still static, DB integration comes Week 4)
+// WEEK 4 - Shop: Now connected to real DB with basic filtering
 $page_title = 'Shop';
 require_once 'includes/header.php';
 
-// Hardcoded products for GUI design purposes
-$products = [
-    ['name'=>'Toyota Alternator','brand'=>'Denso','price'=>4500,'part_number'=>'27060-0P010','image_url'=>'assets/images/product1.jpg','condition_type'=>'new'],
-    ['name'=>'Brake Pads Set',  'brand'=>'Brembo','price'=>2800,'part_number'=>'BP-TS2210',  'image_url'=>'assets/images/product2.jpg','condition_type'=>'oem'],
-    ['name'=>'Air Filter',      'brand'=>'K&N',   'price'=>1200,'part_number'=>'33-2842',     'image_url'=>'assets/images/product3.jpg','condition_type'=>'new'],
-    ['name'=>'Shock Absorber',  'brand'=>'KYB',   'price'=>3600,'part_number'=>'344390',      'image_url'=>'assets/images/product4.jpg','condition_type'=>'aftermarket'],
-    ['name'=>'Radiator',        'brand'=>'Nissens','price'=>7800,'part_number'=>'638862',      'image_url'=>'assets/images/product5.jpg','condition_type'=>'new'],
-    ['name'=>'Starter Motor',   'brand'=>'Bosch', 'price'=>5200,'part_number'=>'0001107436',  'image_url'=>'assets/images/product6.jpg','condition_type'=>'refurbished'],
-];
-?>
+$where_clauses = [];
+$q = isset($_GET['q']) ? trim($_GET['q']) : '';
+$category_slug = isset($_GET['category']) ? trim($_GET['category']) : '';
 
+if ($q) {
+    $q_safe = $conn->real_escape_string($q);
+    $where_clauses[] = "(p.name LIKE '%$q_safe%' OR p.part_number LIKE '%$q_safe%' OR p.brand LIKE '%$q_safe%')";
+}
+if ($category_slug) {
+    $cat_safe = $conn->real_escape_string($category_slug);
+    $where_clauses[] = "c.slug = '$cat_safe'";
+}
+
+$where    = implode(' AND ', $where_clauses);
+$products = get_all_products($conn, $where, 12, 0);
+$categories = get_categories($conn);
+
+$count_sql = "SELECT COUNT(*) AS total FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.is_active = 1" . ($where ? " AND $where" : "");
+$total = $conn->query($count_sql)->fetch_assoc()['total'];
+?>
 <div class="shop-header">
     <h1>The Catalogue</h1>
     <p>Browse our full range of genuine and aftermarket parts</p>
 </div>
-
 <div class="shop-body">
-    <!-- WEEK 2: Static filter bar - no functionality yet -->
     <div class="shop-filters">
-        <div class="filter-row">
-            <input type="text" class="filter-input" placeholder="Search part name or number">
-            <select class="filter-select">
-                <option value="">All Categories</option>
-                <option>Engine Parts</option>
-                <option>Brakes</option>
-                <option>Suspension</option>
-                <option>Electrical</option>
-            </select>
-            <select class="filter-select">
-                <option value="">All Conditions</option>
-                <option>New</option>
-                <option>OEM</option>
-                <option>Aftermarket</option>
-                <option>Refurbished</option>
-            </select>
-            <button type="button" class="filter-btn">Filter</button>
-        </div>
+        <form method="GET" action="shop.php">
+            <div class="filter-row">
+                <input type="text" name="q" class="filter-input" placeholder="Search part name or number" value="<?php echo htmlspecialchars($q); ?>">
+                <select name="category" class="filter-select">
+                    <option value="">All Categories</option>
+                    <?php foreach ($categories as $cat): ?>
+                    <option value="<?php echo htmlspecialchars($cat['slug']); ?>" <?php echo $category_slug === $cat['slug'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($cat['name']); ?>
+                    </option>
+                    <?php endforeach; ?>
+                </select>
+                <button type="submit" class="filter-btn">Filter</button>
+                <a href="shop.php" class="filter-btn" style="background:transparent;color:var(--taupe);border:1px solid var(--taupe);">Clear</a>
+            </div>
+        </form>
     </div>
-
-    <div class="results-info"><?php echo count($products); ?> PRODUCTS FOUND</div>
-
+    <div class="results-info"><?php echo $total; ?> PRODUCTS FOUND</div>
+    <?php if (empty($products)): ?>
+    <div style="text-align:center;padding:80px 0;">
+        <p style="color:var(--taupe);font-size:20px;">No parts found.</p>
+        <a href="shop.php" class="btn-gold" style="display:inline-block;margin-top:24px;">Browse All Parts</a>
+    </div>
+    <?php else: ?>
     <div class="products-grid">
-        <?php foreach ($products as $p): ?>
-        <div class="product-card">
+        <?php foreach ($products as $product): ?>
+        <a href="product.php?slug=<?php echo urlencode($product['slug']); ?>" class="product-card">
             <div class="product-img">
-                <img src="<?php echo $p['image_url']; ?>" alt="<?php echo $p['name']; ?>">
+                <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
                 <div class="product-badges">
-                    <span class="badge-condition badge-<?php echo $p['condition_type']; ?>"><?php echo ucfirst($p['condition_type']); ?></span>
+                    <span class="badge-condition badge-<?php echo $product['condition_type']; ?>"><?php echo ucfirst($product['condition_type']); ?></span>
                 </div>
             </div>
             <div class="product-body">
-                <div class="product-brand"><?php echo $p['brand']; ?></div>
-                <div class="product-name"><?php echo $p['name']; ?></div>
-                <div class="product-part-no"><?php echo $p['part_number']; ?></div>
+                <div class="product-brand"><?php echo htmlspecialchars($product['brand']); ?></div>
+                <div class="product-name"><?php echo htmlspecialchars($product['name']); ?></div>
+                <div class="product-part-no"><?php echo htmlspecialchars($product['part_number']); ?></div>
                 <div class="product-footer">
-                    <div class="product-price">KSh <?php echo number_format($p['price']); ?></div>
+                    <div class="product-price"><?php echo format_price($product['price']); ?></div>
                     <button class="btn-add-cart">Add to Cart</button>
                 </div>
             </div>
-        </div>
+        </a>
         <?php endforeach; ?>
     </div>
+    <?php endif; ?>
 </div>
-
 <?php require_once 'includes/footer.php'; ?>
