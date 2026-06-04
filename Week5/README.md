@@ -11,18 +11,18 @@
 ## Final project feature summary
 | Feature | Status |
 |---|---|
-| Dynamic homepage | ✅ Live from DB |
-| Product catalogue with filters | ✅ Search, category, condition |
-| Product detail page | ✅ With related products |
-| Session cart (add, update, remove) | ✅ |
-| Checkout with shipping form | ✅ Saves to orders table |
-| User registration | ✅ Hashed passwords |
-| Login / Logout | ✅ Session-based |
-| Admin dashboard | ✅ Stats overview |
-| Admin product management | ✅ Full CRUD |
-| Admin order management | ✅ Status updates |
-| AJAX model dropdown | ✅ Fetch API |
-| Mobile responsive | ✅ Bootstrap 5 grid |
+| Dynamic homepage |  Live from DB |
+| Product catalogue with filters |  Search, category, condition |
+| Product detail page |  With related products |
+| Session cart (add, update, remove) |  |
+| Checkout with shipping form |  Saves to orders table |
+| User registration |  Hashed passwords |
+| Login / Logout |  Session-based |
+| Admin dashboard |  Stats overview |
+| Admin product management |  Full CRUD |
+| Admin order management |  Status updates |
+| AJAX model dropdown |  Fetch API |
+| Mobile responsive |  Bootstrap 5 grid |
 
 ## Database setup
 1. Open `http://localhost/phpmyadmin`
@@ -30,7 +30,7 @@
 
 ## Admin login
 - **Email:** `admin@pitstopparts.co.ke`
-- **Password:** `password`
+- **Password:** ``
 
 ## File structure
 ```
