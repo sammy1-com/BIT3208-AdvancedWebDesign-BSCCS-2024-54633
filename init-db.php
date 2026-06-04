@@ -14,19 +14,21 @@ if ($conn->connect_error) {
 }
 
 // Always drop and recreate to ensure schema is correct
-$conn->query("DROP DATABASE IF EXISTS $dbname");
+$conn->query("DROP DATABASE IF EXISTS `$dbname`");
+$conn->query("CREATE DATABASE `$dbname` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+$conn->select_db($dbname);
 
-// Read the SQL file and replace the hardcoded database name with the environment variable
+// Read the SQL file and strip CREATE DATABASE / USE statements (handled above)
 $sql = file_get_contents(__DIR__ . '/sql/pitstop.sql');
-$sql = str_replace('CREATE DATABASE IF NOT EXISTS pitstop', "CREATE DATABASE IF NOT EXISTS $dbname", $sql);
-$sql = str_replace('USE pitstop', "USE $dbname", $sql);
+$sql = preg_replace('/^\s*CREATE\s+DATABASE\b[^;]*;\s*/im', '', $sql);
+$sql = preg_replace('/^\s*USE\s+\S+\s*;\s*/im', '', $sql);
 
 // Split by semicolon and execute each statement
 $statements = array_filter(array_map('trim', explode(';', $sql)));
 foreach ($statements as $statement) {
     if (!empty($statement)) {
         if (!$conn->query($statement)) {
-            echo "Error: " . $conn->error . "\n";
+            echo "Error executing statement: " . $conn->error . "\nStatement: " . $statement . "\n";
         }
     }
 }
