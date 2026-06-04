@@ -1,16 +1,7 @@
 <?php
-// WEEK 4 - Cart: Session-based cart (no checkout yet, comes in Week 5)
 $page_title = 'Cart';
 require_once 'includes/header.php';
 
-// Handle remove item
-if (isset($_GET['remove'])) {
-    $pid = (int)$_GET['remove'];
-    unset($_SESSION['cart'][$pid]);
-    redirect('/pitstop/cart.php');
-}
-
-// Handle update quantities
 if (isset($_POST['update_cart'])) {
     if (isset($_POST['quantities']) && is_array($_POST['quantities'])) {
         foreach ($_POST['quantities'] as $pid => $qty) {
@@ -26,17 +17,22 @@ if (isset($_POST['update_cart'])) {
     redirect('/pitstop/cart.php');
 }
 
-// Build cart items from session
+if (isset($_GET['remove'])) {
+    $pid = (int)$_GET['remove'];
+    unset($_SESSION['cart'][$pid]);
+    redirect('/pitstop/cart.php');
+}
+
 $cart_items = [];
 if (!empty($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $pid => $qty) {
-        $id     = (int)$pid;
+        $id = (int)$pid;
         $result = $conn->query("SELECT * FROM products WHERE id = $id AND is_active = 1");
-        $p      = $result->fetch_assoc();
+        $p = $result->fetch_assoc();
         if ($p) {
-            $p['qty']      = $qty;
+            $p['qty'] = $qty;
             $p['subtotal'] = $p['price'] * $qty;
-            $cart_items[]  = $p;
+            $cart_items[] = $p;
         }
     }
 }
@@ -44,7 +40,10 @@ if (!empty($_SESSION['cart'])) {
 $total = array_sum(array_column($cart_items, 'subtotal'));
 ?>
 
-<div class="page-header"><h1>Your Cart</h1></div>
+<div class="page-header">
+    <h1>Your Cart</h1>
+</div>
+
 <div class="page-body">
     <?php if (empty($cart_items)): ?>
     <div style="text-align:center;padding:80px 0;">
@@ -57,25 +56,34 @@ $total = array_sum(array_column($cart_items, 'subtotal'));
             <form method="POST">
                 <table class="cart-table">
                     <thead>
-                        <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($cart_items as $item): ?>
                         <tr>
                             <td>
-                                <img src="<?php echo htmlspecialchars($item['image_url']); ?>" class="cart-product-img" alt="">
-                                <div>
-                                    <div class="cart-product-brand"><?php echo htmlspecialchars($item['brand']); ?></div>
-                                    <div class="cart-product-name"><?php echo htmlspecialchars($item['name']); ?></div>
+                                <div style="display:flex;align-items:center;">
+                                    <img src="<?php echo htmlspecialchars($item['image_url']); ?>" alt="" class="cart-product-img">
+                                    <div>
+                                        <div class="cart-product-brand"><?php echo htmlspecialchars($item['brand']); ?></div>
+                                        <div class="cart-product-name"><?php echo htmlspecialchars($item['name']); ?></div>
+                                    </div>
                                 </div>
                             </td>
                             <td><?php echo format_price($item['price']); ?></td>
                             <td>
-                                <input type="number" name="quantities[<?php echo $item['id']; ?>]"
-                                    value="<?php echo $item['qty']; ?>" min="0" max="<?php echo $item['stock']; ?>" class="cart-qty">
+                                <input type="number" name="quantities[<?php echo $item['id']; ?>]" value="<?php echo $item['qty']; ?>" min="0" max="<?php echo $item['stock']; ?>" class="cart-qty">
                             </td>
                             <td><?php echo format_price($item['subtotal']); ?></td>
-                            <td><a href="cart.php?remove=<?php echo $item['id']; ?>" class="btn-remove">Remove</a></td>
+                            <td>
+                                <a href="cart.php?remove=<?php echo $item['id']; ?>" class="btn-remove">Remove</a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -96,9 +104,8 @@ $total = array_sum(array_column($cart_items, 'subtotal'));
                     <span>Total</span>
                     <span><?php echo format_price($total); ?></span>
                 </div>
-                <!-- WEEK 4: Checkout page comes in Week 5 -->
                 <?php if (is_logged_in()): ?>
-                <p style="color:var(--taupe);font-size:13px;margin-top:16px;">Checkout coming in Week 5</p>
+                <a href="checkout.php" class="btn-checkout" style="display:block;text-align:center;">Proceed to Checkout</a>
                 <?php else: ?>
                 <a href="login.php" class="btn-checkout" style="display:block;text-align:center;">Login to Checkout</a>
                 <?php endif; ?>

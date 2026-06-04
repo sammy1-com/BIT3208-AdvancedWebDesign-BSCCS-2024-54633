@@ -1,5 +1,4 @@
 <?php
-// WEEK 4 - Shop: Now connected to real DB with basic filtering
 $page_title = 'Shop';
 require_once 'includes/header.php';
 
@@ -11,22 +10,31 @@ if ($q) {
     $q_safe = $conn->real_escape_string($q);
     $where_clauses[] = "(p.name LIKE '%$q_safe%' OR p.part_number LIKE '%$q_safe%' OR p.brand LIKE '%$q_safe%')";
 }
+
 if ($category_slug) {
     $cat_safe = $conn->real_escape_string($category_slug);
     $where_clauses[] = "c.slug = '$cat_safe'";
 }
 
-$where    = implode(' AND ', $where_clauses);
+$condition = isset($_GET['condition']) ? $_GET['condition'] : '';
+if ($condition) {
+    $cond_safe = $conn->real_escape_string($condition);
+    $where_clauses[] = "p.condition_type = '$cond_safe'";
+}
+
+$where = implode(' AND ', $where_clauses);
 $products = get_all_products($conn, $where, 12, 0);
 $categories = get_categories($conn);
-
 $count_sql = "SELECT COUNT(*) AS total FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.is_active = 1" . ($where ? " AND $where" : "");
-$total = $conn->query($count_sql)->fetch_assoc()['total'];
+$count_row = $conn->query($count_sql)->fetch_assoc();
+$total = $count_row['total'];
 ?>
+
 <div class="shop-header">
     <h1>The Catalogue</h1>
     <p>Browse our full range of genuine and aftermarket parts</p>
 </div>
+
 <div class="shop-body">
     <div class="shop-filters">
         <form method="GET" action="shop.php">
@@ -40,15 +48,24 @@ $total = $conn->query($count_sql)->fetch_assoc()['total'];
                     </option>
                     <?php endforeach; ?>
                 </select>
+                <select name="condition" class="filter-select">
+                    <option value="">All Conditions</option>
+                    <option value="new" <?php echo $condition === 'new' ? 'selected' : ''; ?>>New</option>
+                    <option value="oem" <?php echo $condition === 'oem' ? 'selected' : ''; ?>>OEM</option>
+                    <option value="aftermarket" <?php echo $condition === 'aftermarket' ? 'selected' : ''; ?>>Aftermarket</option>
+                    <option value="refurbished" <?php echo $condition === 'refurbished' ? 'selected' : ''; ?>>Refurbished</option>
+                </select>
                 <button type="submit" class="filter-btn">Filter</button>
                 <a href="shop.php" class="filter-btn" style="background:transparent;color:var(--taupe);border:1px solid var(--taupe);">Clear</a>
             </div>
         </form>
     </div>
+
     <div class="results-info"><?php echo $total; ?> PRODUCTS FOUND</div>
+
     <?php if (empty($products)): ?>
     <div style="text-align:center;padding:80px 0;">
-        <p style="color:var(--taupe);font-size:20px;">No parts found.</p>
+        <p style="font-family:var(--font-body);font-size:20px;color:var(--taupe);">No parts found matching your search.</p>
         <a href="shop.php" class="btn-gold" style="display:inline-block;margin-top:24px;">Browse All Parts</a>
     </div>
     <?php else: ?>
@@ -58,7 +75,9 @@ $total = $conn->query($count_sql)->fetch_assoc()['total'];
             <div class="product-img">
                 <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
                 <div class="product-badges">
-                    <span class="badge-condition badge-<?php echo $product['condition_type']; ?>"><?php echo ucfirst($product['condition_type']); ?></span>
+                    <span class="badge-condition badge-<?php echo $product['condition_type']; ?>">
+                        <?php echo ucfirst($product['condition_type']); ?>
+                    </span>
                 </div>
             </div>
             <div class="product-body">
@@ -75,4 +94,5 @@ $total = $conn->query($count_sql)->fetch_assoc()['total'];
     </div>
     <?php endif; ?>
 </div>
+
 <?php require_once 'includes/footer.php'; ?>
