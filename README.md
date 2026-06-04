@@ -1,27 +1,29 @@
-# PitStop Parts — Week 1: Environment Setup
+# PitStop Parts — Week 2: Wireframes and GUI Design
 
 ## What was done this week
-- Installed XAMPP (Apache + MySQL + PHP 8)
-- Configured localhost environment
-- Created the `pitstop` database in phpMyAdmin
-- Wrote first PHP page
-- Tested database connection via mysqli
+- Designed hand-drawn wireframes for homepage and admin panel
+- Created mobile mockup and color scheme (gold + black + white)
+- Built Figma prototype
+- Coded the full HTML/CSS static frontend for homepage, shop, login, register
+- No PHP logic or database connected yet — pure UI design
 
 ## How to run
-1. Copy the `Week1/` folder to `C:\xampp\htdocs\pitstop\`
-2. Start Apache and MySQL in XAMPP Control Panel
+1. Copy `Week2/` folder to `C:\xampp\htdocs\pitstop\`
+2. Start Apache in XAMPP
 3. Open `http://localhost/pitstop/index.php`
-4. Visit `http://localhost/pitstop/test_db.php` to confirm DB connection
+4. Note: Login/Register forms are design-only — submissions do nothing yet
 
-## Files
-| File | Purpose |
-|---|---|
-| `index.php` | Hello World / environment test |
-| `test_db.php` | Database connection test page |
-| `includes/db.php` | mysqli connection script |
+## What is new this week vs Week 1
+| Feature | Week 1 | Week 2 |
+|---|---|---|
+| Homepage | Plain text | Full hero, categories, products grid |
+| Shop | None | Static product catalogue |
+| Login/Register | None | Designed forms (no backend) |
+| Styling | None | Full CSS with gold/black theme |
 
 ## Technologies used
-- XAMPP 8.x
-- PHP 8.2
-- MySQL via phpMyAdmin
-- VS Code
+- HTML5, CSS3
+- PHP (template only, no logic)
+- Google Fonts (Cinzel, Montserrat, EB Garamond)
+- Bootstrap 5 grid
+- Figma (wireframing)
