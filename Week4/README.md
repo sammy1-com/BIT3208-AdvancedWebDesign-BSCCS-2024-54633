@@ -21,7 +21,7 @@
 
 ## Admin credentials (for testing)
 - Email: `admin@pitstopparts.co.ke`
-- Password: `password`
+- Password: ``
 
 ## New files this week
 | File | Purpose |
