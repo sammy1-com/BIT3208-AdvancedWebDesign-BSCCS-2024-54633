@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
 }
 
-// Drop existing database if it exists
+// Always drop and recreate to ensure schema is correct
 $conn->query("DROP DATABASE IF EXISTS $dbname");
 
 // Read the SQL file and replace the hardcoded database name with the environment variable
