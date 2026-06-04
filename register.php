@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div style="position:relative;display:flex;align-items:center;">
     <input type="password" name="password" id="reg-password" class="form-control" required>
     <button type="button" onclick="togglePassword('reg-password', 'toggle-icon-1')"
-            style="position:absolute;right:0;top:0;bottom:0;width:45px;
+            style="padding-right:50px;position:absolute;right:0;top:0;bottom:0;width:45px;
                    background:#f1f1f1;border:1px solid #ccc;border-left:none;
                    border-radius:0 4px 4px 0;cursor:pointer;
                    display:flex;align-items:center;justify-content:center;">
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div style="position:relative;display:flex;align-items:center;">
     <input type="password" name="confirm_password" id="reg-confirm" class="form-control" required>
     <button type="button" onclick="togglePassword('reg-confirm', 'toggle-icon-2')"
-            style="position:absolute;right:0;top:0;bottom:0;width:45px;
+            style="padding-right:50px;position:absolute;right:0;top:0;bottom:0;width:45px;
                    background:#f1f1f1;border:1px solid #ccc;border-left:none;
                    border-radius:0 4px 4px 0;cursor:pointer;
                    display:flex;align-items:center;justify-content:center;">
