@@ -1,5 +1,5 @@
 <?php
-// WEEK 2 - Static Shop Page (No database yet)
+// WEEK 3 - Shop (still static, DB integration comes Week 4)
 $page_title = 'Shop';
 require_once 'includes/header.php';
 

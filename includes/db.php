@@ -1,5 +1,5 @@
 <?php
-// Database connection - Week 1
+// WEEK 3 - Database Connection (now properly included and tested)
 $host     = 'localhost';
 $dbname   = 'pitstop';
 $username = 'root';
@@ -8,8 +8,6 @@ $password = '';
 $conn = new mysqli($host, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die('<p style="color:red;">Connection FAILED: ' . $conn->connect_error . '</p>');
+    die('Connection failed: ' . $conn->connect_error);
 }
-
-echo '<p style="color:green;">Database connection SUCCESSFUL.</p>';
 ?>

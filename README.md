@@ -1,29 +1,34 @@
-# PitStop Parts — Week 2: Wireframes and GUI Design
+# PitStop Parts — Week 3: JavaScript and PHP Basics
 
 ## What was done this week
-- Designed hand-drawn wireframes for homepage and admin panel
-- Created mobile mockup and color scheme (gold + black + white)
-- Built Figma prototype
-- Coded the full HTML/CSS static frontend for homepage, shop, login, register
-- No PHP logic or database connected yet — pure UI design
+- Added JavaScript form validation to Login (client-side before PHP)
+- Built password strength checker on Register using DOM events
+- Created AJAX dynamic model dropdown using Fetch API
+- Built hero image slideshow with JS
+- Added search tab switching (By Vehicle / By Part)
+- Added PHP server-side validation on Login and Register
+- Created `includes/functions.php` with helper functions
+- Set up `ajax/get-models.php` to return JSON data
 
-## How to run
-1. Copy `Week2/` folder to `C:\xampp\htdocs\pitstop\`
-2. Start Apache in XAMPP
-3. Open `http://localhost/pitstop/index.php`
-4. Note: Login/Register forms are design-only — submissions do nothing yet
-
-## What is new this week vs Week 1
-| Feature | Week 1 | Week 2 |
+## What is new vs Week 2
+| Feature | Week 2 | Week 3 |
 |---|---|---|
-| Homepage | Plain text | Full hero, categories, products grid |
-| Shop | None | Static product catalogue |
-| Login/Register | None | Designed forms (no backend) |
-| Styling | None | Full CSS with gold/black theme |
+| Login validation | None | JS + PHP validation |
+| Register validation | None | JS + PHP + password strength |
+| Hero slideshow | Static image | JS auto-cycling slideshow |
+| Model dropdown | Static | Dynamic via Fetch API/AJAX |
+| PHP helpers | None | `functions.php` with redirect, format_price |
+| DB | Not used | Connected, not yet queried for content |
+
+## Files added this week
+| File | Purpose |
+|---|---|
+| `includes/functions.php` | PHP helper functions |
+| `includes/db.php` | mysqli database connection |
+| `ajax/get-models.php` | AJAX endpoint — returns models JSON |
+| `assets/js/main.js` | Hero slider, tabs, Fetch API, scroll reveal |
 
 ## Technologies used
-- HTML5, CSS3
-- PHP (template only, no logic)
-- Google Fonts (Cinzel, Montserrat, EB Garamond)
-- Bootstrap 5 grid
-- Figma (wireframing)
+- JavaScript (DOM, Events, Fetch API, IntersectionObserver)
+- PHP 8 (validation, POST handling, functions)
+- MySQL (connected but not yet queried for page content)

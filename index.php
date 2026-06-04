@@ -1,5 +1,5 @@
 <?php
-// WEEK 2 - Static Frontend (No database yet)
+// WEEK 3 - Frontend with JS + PHP basics
 $page_title = 'Home';
 require_once 'includes/header.php';
 
