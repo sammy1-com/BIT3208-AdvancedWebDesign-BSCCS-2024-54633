@@ -3,12 +3,12 @@ require_once 'includes/header.php';
 
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 if (!$slug) {
-    redirect('/pitstop/shop.php');
+    redirect('/shop.php');
 }
 
 $product = get_product_by_slug($conn, $slug);
 if (!$product) {
-    redirect('/pitstop/shop.php');
+    redirect('/shop.php');
 }
 
 $page_title = $product['name'];
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     } else {
         $_SESSION['cart'][$pid] += $qty;
     }
-    redirect('/pitstop/cart.php');
+    redirect('/cart.php');
 }
 
 $related_result = $conn->query("SELECT * FROM products WHERE category_id = " . (int)$product['category_id'] . " AND id != " . (int)$product['id'] . " AND is_active = 1 LIMIT 4");

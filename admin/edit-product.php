@@ -5,11 +5,11 @@ require_once '../includes/functions.php';
 require_admin();
 
 $id = (int)($_GET['id'] ?? 0);
-if (!$id) redirect('/pitstop/admin/products.php');
+if (!$id) redirect('/admin/products.php');
 
 $result = $conn->query("SELECT * FROM products WHERE id = $id");
 $product = $result->fetch_assoc();
-if (!$product) redirect('/pitstop/admin/products.php');
+if (!$product) redirect('/admin/products.php');
 
 $categories = get_categories($conn);
 $error = '';
@@ -72,25 +72,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <title>Edit Product — Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/pitstop/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <div class="admin-wrapper">
     <aside class="admin-sidebar">
         <div class="sidebar-logo">Pit<span>Stop</span></div>
         <nav class="sidebar-nav">
-            <a href="/pitstop/admin/index.php">Dashboard</a>
-            <a href="/pitstop/admin/products.php" class="active">Products</a>
-            <a href="/pitstop/admin/add-product.php">Add Product</a>
-            <a href="/pitstop/admin/orders.php">Orders</a>
-            <a href="/pitstop/index.php">View Store</a>
-            <a href="/pitstop/logout.php">Logout</a>
+            <a href="/admin/index.php">Dashboard</a>
+            <a href="/admin/products.php" class="active">Products</a>
+            <a href="/admin/add-product.php">Add Product</a>
+            <a href="/admin/orders.php">Orders</a>
+            <a href="/index.php">View Store</a>
+            <a href="/logout.php">Logout</a>
         </nav>
     </aside>
     <main class="admin-main">
         <div class="admin-topbar">
             <h1>Edit Product</h1>
-            <a href="/pitstop/admin/products.php" class="btn-admin btn-admin-dark">Back to Products</a>
+            <a href="/admin/products.php" class="btn-admin btn-admin-dark">Back to Products</a>
         </div>
         <div class="admin-content">
             <?php if ($error): ?>
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <textarea name="description" rows="4"><?php echo htmlspecialchars($product['description']); ?></textarea>
                 <?php if ($product['image_url']): ?>
                 <div style="margin-bottom:12px;">
-                    <img src="/pitstop/<?php echo htmlspecialchars($product['image_url']); ?>" style="height:100px;width:auto;border-radius:3px;object-fit:cover;">
+                    <img src="/<?php echo htmlspecialchars($product['image_url']); ?>" style="height:100px;width:auto;border-radius:3px;object-fit:cover;">
                 </div>
                 <?php endif; ?>
                 <label class="form-label">Replace Image (optional)</label>

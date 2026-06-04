@@ -9,19 +9,19 @@
                 <div class="col-md-2">
                     <h6 class="footer-heading">Shop</h6>
                     <ul class="footer-links">
-                        <li><a href="/pitstop/shop.php?category=engine">Engine Parts</a></li>
-                        <li><a href="/pitstop/shop.php?category=brakes">Brakes</a></li>
-                        <li><a href="/pitstop/shop.php?category=body-parts">Body Parts</a></li>
-                        <li><a href="/pitstop/shop.php?category=electrical">Electrical</a></li>
-                        <li><a href="/pitstop/shop.php?category=suspension">Suspension</a></li>
+                        <li><a href="/shop.php?category=engine">Engine Parts</a></li>
+                        <li><a href="/shop.php?category=brakes">Brakes</a></li>
+                        <li><a href="/shop.php?category=body-parts">Body Parts</a></li>
+                        <li><a href="/shop.php?category=electrical">Electrical</a></li>
+                        <li><a href="/shop.php?category=suspension">Suspension</a></li>
                     </ul>
                 </div>
                 <div class="col-md-2">
                     <h6 class="footer-heading">Account</h6>
                     <ul class="footer-links">
-                        <li><a href="/pitstop/login.php">Login</a></li>
-                        <li><a href="/pitstop/register.php">Register</a></li>
-                        <li><a href="/pitstop/cart.php">Cart</a></li>
+                        <li><a href="/login.php">Login</a></li>
+                        <li><a href="/register.php">Register</a></li>
+                        <li><a href="/cart.php">Cart</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -39,6 +39,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/pitstop/assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 </body>
 </html>

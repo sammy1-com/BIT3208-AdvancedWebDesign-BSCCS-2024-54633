@@ -20,7 +20,7 @@ if (!empty($_SESSION['cart'])) {
     }
 }
 
-if (empty($cart_items)) redirect('/pitstop/cart.php');
+if (empty($cart_items)) redirect('/cart.php');
 
 $error = '';
 $success = false;
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div style="text-align:center;padding:80px 0;">
         <h2 style="font-family:var(--font-display);font-size:36px;color:var(--black);letter-spacing:2px;margin-bottom:16px;">Order Placed</h2>
         <p style="font-family:var(--font-body);font-size:18px;color:var(--taupe);">Thank you. Your order #<?php echo $placed_order_id; ?> has been received. We will contact you shortly.</p>
-        <a href="/pitstop/index.php" class="btn-gold" style="display:inline-block;margin-top:32px;">Back to Store</a>
+        <a href="/index.php" class="btn-gold" style="display:inline-block;margin-top:32px;">Back to Store</a>
     </div>
     <?php else: ?>
     <?php if ($error): ?>
