@@ -1,13 +1,15 @@
 <?php
-// WEEK 3 - Database Connection (now properly included and tested)
-$host     = 'localhost';
-$dbname   = 'pitstop';
-$username = 'root';
-$password = '';
+// Database Connection - Using Railway MySQL service
+$host     = getenv('MYSQLHOST') ?: 'localhost';
+$port     = getenv('MYSQLPORT') ?: 3306;
+$dbname   = getenv('MYSQLDATABASE') ?: 'pitstop';
+$username = getenv('MYSQLUSER') ?: 'root';
+$password = getenv('MYSQLPASSWORD') ?: '';
 
-$conn = new mysqli($host, $username, $password, $dbname);
+$conn = new mysqli($host, $username, $password, $dbname, $port);
 
 if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
 }
 ?>
+
