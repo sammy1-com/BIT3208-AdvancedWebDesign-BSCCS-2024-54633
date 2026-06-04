@@ -13,16 +13,8 @@ if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
 }
 
-// Check if the database already exists and has tables
-$result = $conn->query("SELECT COUNT(*) as count FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$dbname'");
-$row = $result->fetch_assoc();
-
-if ($row['count'] > 0) {
-    // Database already initialized, skip
-    echo "Database already initialized.\n";
-    $conn->close();
-    exit(0);
-}
+// Always drop and recreate to ensure schema is correct
+$conn->query("DROP DATABASE IF EXISTS $dbname");
 
 // Read the SQL file and replace the hardcoded database name with the environment variable
 $sql = file_get_contents(__DIR__ . '/sql/pitstop.sql');
