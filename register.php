@@ -73,11 +73,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="email" name="email" class="form-control" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
             <label class="form-label">Phone Number</label>
             <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
-            <label class="form-label">Password</label>
-            <input type="password" name="password" id="password" class="form-control" required>
-            <small id="strength-msg"></small>
-            <label class="form-label">Confirm Password</label>
-            <input type="password" name="confirm_password" class="form-control" required>
+           <label class="form-label">Password</label>
+<div style="position:relative;">
+    <input type="password" name="password" id="reg-password" class="form-control" required>
+    <i class="fa-regular fa-eye" id="toggle-icon-1" onclick="togglePassword('reg-password', 'toggle-icon-1')"
+       style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--taupe);"></i>
+</div>
+<small id="strength-msg" style="display:block;margin-bottom:8px;font-size:12px;"></small>
+
+<label class="form-label">Confirm Password</label>
+<div style="position:relative;">
+    <input type="password" name="confirm_password" id="reg-confirm" class="form-control" required>
+    <i class="fa-regular fa-eye" id="toggle-icon-2" onclick="togglePassword('reg-confirm', 'toggle-icon-2')"
+       style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--taupe);"></i>
+</div>
             <button type="submit" class="btn-submit">Create Account</button>
         </form>
         <div class="auth-switch">Already have an account? <a href="/login.php">Login</a></div>
@@ -85,27 +94,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 <script>
-document.getElementById('password').addEventListener('input', function() {
-    var val = this.value;
-    var msg = document.getElementById('strength-msg');
-    var hasUpper = /[A-Z]/.test(val);
-    var hasSymbol = /[^A-Za-z0-9]/.test(val);
-    var hasLength = val.length >= 10;
+function togglePassword(inputId, iconId) {
+    var input = document.getElementById(inputId);
+    var icon = document.getElementById(iconId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
 
-    if (!val) {
-        msg.textContent = '';
-        return;
+document.querySelector('form').addEventListener('submit', function(e) {
+    var password = document.getElementById('reg-password').value;
+    var msg = document.getElementById('strength-msg');
+    var errors = [];
+
+    if (password.length < 10) {
+        errors.push('at least 10 characters');
+    }
+    if (!/[A-Z]/.test(password)) {
+        errors.push('at least one uppercase letter');
+    }
+    if (!/[^a-zA-Z0-9]/.test(password)) {
+        errors.push('at least one symbol');
     }
 
-    if (hasLength && hasUpper && hasSymbol) {
-        msg.textContent = 'Strong password';
-        msg.style.color = '#27a844';
-    } else if (val.length >= 6 && (hasUpper || hasSymbol)) {
-        msg.textContent = 'Medium — add symbols and uppercase';
-        msg.style.color = '#D4A853';
-    } else {
-        msg.textContent = 'Weak — use 10+ characters, uppercase and a symbol';
+    if (errors.length > 0) {
+        e.preventDefault();
+        msg.textContent = 'Password must contain: ' + errors.join(', ') + '.';
         msg.style.color = '#c0392b';
+    } else {
+        msg.textContent = '';
     }
 });
 </script>
