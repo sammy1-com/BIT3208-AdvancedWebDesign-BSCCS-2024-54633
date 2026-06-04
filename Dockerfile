@@ -3,6 +3,9 @@ FROM php:8.2-apache
 # Install mysqli extension
 RUN docker-php-ext-install mysqli
 
+# Disable mpm_prefork to avoid conflicts
+RUN a2dismod mpm_prefork || true
+
 # Copy application files
 COPY . /var/www/html/
 
