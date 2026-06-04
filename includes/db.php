@@ -1,5 +1,4 @@
 <?php
-session_start();
 $host = getenv('MYSQLHOST') ?: 'localhost';
 $port = getenv('MYSQLPORT') ?: 3306;
 $db   = getenv('MYSQLDATABASE') ?: 'pitstop_db';
