@@ -74,31 +74,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label class="form-label">Phone Number</label>
             <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
           <label class="form-label">Password</label>
-<div style="position:relative;display:flex;align-items:stretch;">
-    <input type="password" name="password" id="reg-password" class="form-control" required style="padding-right:50px;flex:1;">
+<div style="display:flex;">
+    <input type="password" name="password" id="reg-password" class="form-control" required 
+           style="padding-right:10px;border-radius:4px 0 0 4px;border-right:none;flex:1;">
     <button type="button" onclick="togglePassword('reg-password', 'toggle-icon-1')"
-            style="width:45px;height:auto;
-                   background:#f1f1f1;border:1px solid #ccc;border-left:none;
+            style="width:45px;background:#f1f1f1;border:1px solid #ccc;border-left:none;
                    border-radius:0 4px 4px 0;cursor:pointer;
-                   display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                   display:flex;align-items:center;justify-content:center;">
         <i class="fa-regular fa-eye" id="toggle-icon-1" style="color:#000;"></i>
     </button>
 </div>
 <small id="strength-msg" style="display:block;margin-bottom:8px;font-size:12px;"></small>
 
 <label class="form-label">Confirm Password</label>
-<div style="position:relative;display:flex;align-items:stretch;">
-    <input type="password" name="confirm_password" id="reg-confirm" class="form-control" required style="padding-right:50px;flex:1;">
+<div style="display:flex;">
+    <input type="password" name="confirm_password" id="reg-confirm" class="form-control" required 
+           style="padding-right:10px;border-radius:4px 0 0 4px;border-right:none;flex:1;">
     <button type="button" onclick="togglePassword('reg-confirm', 'toggle-icon-2')"
-            style="width:45px;height:auto;
-                   background:#f1f1f1;border:1px solid #ccc;border-left:none;
+            style="width:45px;background:#f1f1f1;border:1px solid #ccc;border-left:none;
                    border-radius:0 4px 4px 0;cursor:pointer;
-                   display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                   display:flex;align-items:center;justify-content:center;">
         <i class="fa-regular fa-eye" id="toggle-icon-2" style="color:#000;"></i>
     </button>
 </div>
 <button type="submit" class="btn-submit">Create Account</button>
 </form>
+
         <div class="auth-switch">Already have an account? <a href="/login.php">Login</a></div>
         <?php endif; ?>
     </div>
