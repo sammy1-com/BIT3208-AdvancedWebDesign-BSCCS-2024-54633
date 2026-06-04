@@ -9,13 +9,9 @@ COPY . /var/www/html/
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Enable mod_rewrite for clean URLs
-RUN a2enmod rewrite
-
 # Expose port
 EXPOSE 80
 
 # Initialize database and start Apache
-RUN echo '#!/bin/bash\nphp /var/www/html/init-db.php\napache2-foreground' > /entrypoint.sh && chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+CMD php /var/www/html/init-db.php && apache2-foreground
 
