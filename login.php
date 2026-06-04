@@ -58,21 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label class="form-label">Email Address</label>
             <input type="email" name="email" class="form-control" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
            <label class="form-label">Password</label>
-<div style="display:flex;">
+<div style="display:flex;margin-bottom:20px;">
     <input type="password" name="password" id="login-password" class="form-control" required 
-           style="padding-right:10px;border-radius:4px 0 0 4px;border-right:none;flex:1;">
+           style="width:auto;flex:1;margin-bottom:0;border-right:none;border-radius:2px 0 0 2px;">
     <button type="button" onclick="togglePassword('login-password', 'toggle-icon')"
-            style="width:45px;background:#f1f1f1;border:1px solid #ccc;border-left:none;
-                   border-radius:0 4px 4px 0;cursor:pointer;
+            style="width:45px;background:var(--white);border:1px solid var(--linen);border-left:none;
+                   border-radius:0 2px 2px 0;cursor:pointer;
                    display:flex;align-items:center;justify-content:center;">
         <i class="fa-regular fa-eye" id="toggle-icon" style="color:#000;"></i>
     </button>
 </div>
-            <button type="submit" class="btn-submit">Sign In</button>
-        </form>
-        <div class="auth-switch">
-            Don't have an account? <a href="/register.php">Register</a>
-        </div>
         <div class="auth-switch" style="margin-top:12px;">
             <a href="/index.php" style="color:var(--taupe);">Back to Store</a>
         </div>
