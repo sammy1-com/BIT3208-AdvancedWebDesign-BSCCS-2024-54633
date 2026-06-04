@@ -87,15 +87,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 document.getElementById('password').addEventListener('input', function() {
     var val = this.value;
     var msg = document.getElementById('strength-msg');
-    if (val.length < 8) {
-        msg.textContent = 'Weak password';
-        msg.style.color = '#c0392b';
-    } else if (val.length < 10) {
-        msg.textContent = 'Medium password';
-        msg.style.color = '#D4A853';
-    } else {
+    var hasUpper = /[A-Z]/.test(val);
+    var hasSymbol = /[^A-Za-z0-9]/.test(val);
+    var hasLength = val.length >= 10;
+
+    if (!val) {
+        msg.textContent = '';
+        return;
+    }
+
+    if (hasLength && hasUpper && hasSymbol) {
         msg.textContent = 'Strong password';
         msg.style.color = '#27a844';
+    } else if (val.length >= 6 && (hasUpper || hasSymbol)) {
+        msg.textContent = 'Medium — add symbols and uppercase';
+        msg.style.color = '#D4A853';
+    } else {
+        msg.textContent = 'Weak — use 10+ characters, uppercase and a symbol';
+        msg.style.color = '#c0392b';
     }
 });
 </script>
