@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div style="position:relative;">
     <input type="password" name="password" id="login-password" class="form-control" required>
     <i class="fa-regular fa-eye" id="toggle-icon" onclick="togglePassword('login-password', 'toggle-icon')"
-       style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--taupe);"></i>
+       style="position:absolute;right:14px;top:-12px;cursor:pointer;color:#000;"></i>
 </div>
             <button type="submit" class="btn-submit">Sign In</button>
         </form>
