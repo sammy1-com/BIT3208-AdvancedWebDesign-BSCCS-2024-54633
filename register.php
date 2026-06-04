@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div style="position:relative;">
     <input type="password" name="password" id="reg-password" class="form-control" required>
     <i class="fa-regular fa-eye" id="toggle-icon-1" onclick="togglePassword('reg-password', 'toggle-icon-1')"
-       style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--taupe);"></i>
+       style="position:absolute;right:14px;top:-12px;cursor:pointer;color:#000;"></i>
 </div>
 <small id="strength-msg" style="display:block;margin-bottom:8px;font-size:12px;"></small>
 
