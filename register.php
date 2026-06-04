@@ -74,12 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label class="form-label">Phone Number</label>
             <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
           <label class="form-label">Password</label>
-<div style="display:flex;">
+<div style="display:flex;margin-bottom:20px;">
     <input type="password" name="password" id="reg-password" class="form-control" required 
-           style="padding-right:10px;border-radius:4px 0 0 4px;border-right:none;flex:1;">
+           style="width:auto;flex:1;margin-bottom:0;border-right:none;border-radius:2px 0 0 2px;">
     <button type="button" onclick="togglePassword('reg-password', 'toggle-icon-1')"
-            style="width:45px;background:#f1f1f1;border:1px solid #ccc;border-left:none;
-                   border-radius:0 4px 4px 0;cursor:pointer;
+            style="width:45px;background:var(--white);border:1px solid var(--linen);border-left:none;
+                   border-radius:0 2px 2px 0;cursor:pointer;
                    display:flex;align-items:center;justify-content:center;">
         <i class="fa-regular fa-eye" id="toggle-icon-1" style="color:#000;"></i>
     </button>
@@ -87,16 +87,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <small id="strength-msg" style="display:block;margin-bottom:8px;font-size:12px;"></small>
 
 <label class="form-label">Confirm Password</label>
-<div style="display:flex;">
+<div style="display:flex;margin-bottom:20px;">
     <input type="password" name="confirm_password" id="reg-confirm" class="form-control" required 
-           style="padding-right:10px;border-radius:4px 0 0 4px;border-right:none;flex:1;">
+           style="width:auto;flex:1;margin-bottom:0;border-right:none;border-radius:2px 0 0 2px;">
     <button type="button" onclick="togglePassword('reg-confirm', 'toggle-icon-2')"
-            style="width:45px;background:#f1f1f1;border:1px solid #ccc;border-left:none;
-                   border-radius:0 4px 4px 0;cursor:pointer;
+            style="width:45px;background:var(--white);border:1px solid var(--linen);border-left:none;
+                   border-radius:0 2px 2px 0;cursor:pointer;
                    display:flex;align-items:center;justify-content:center;">
         <i class="fa-regular fa-eye" id="toggle-icon-2" style="color:#000;"></i>
     </button>
 </div>
+<button type="submit" class="btn-submit">Create Account</button>
+</form>
 <button type="submit" class="btn-submit">Create Account</button>
 </form>
 
