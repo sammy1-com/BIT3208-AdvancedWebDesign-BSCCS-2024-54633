@@ -57,11 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST">
             <label class="form-label">Email Address</label>
             <input type="email" name="email" class="form-control" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
-            <label class="form-label">Password</label>
-<div style="position:relative;">
-    <input type="password" name="password" id="login-password" class="form-control" required>
-    <i class="fa-regular fa-eye" id="toggle-icon" onclick="togglePassword('login-password', 'toggle-icon')"
-       style="position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--taupe);""></i>
+           <label class="form-label">Password</label>
+<div style="display:flex;">
+    <input type="password" name="password" id="login-password" class="form-control" required 
+           style="padding-right:10px;border-radius:4px 0 0 4px;border-right:none;flex:1;">
+    <button type="button" onclick="togglePassword('login-password', 'toggle-icon')"
+            style="width:45px;background:#f1f1f1;border:1px solid #ccc;border-left:none;
+                   border-radius:0 4px 4px 0;cursor:pointer;
+                   display:flex;align-items:center;justify-content:center;">
+        <i class="fa-regular fa-eye" id="toggle-icon" style="color:#000;"></i>
+    </button>
 </div>
             <button type="submit" class="btn-submit">Sign In</button>
         </form>
