@@ -7,7 +7,7 @@ An e-commerce web app for a Kenyan auto parts store. Browse parts, search by veh
 - Vehicle make/model search with dynamic dropdown
 - Shopping cart and checkout with shipping details
 - User registration and login
-- Admin panel — add, edit, delete products and update order status
+- Admin panel; add, edit, delete products and update order status
 
 ## Tech Stack
 PHP · MySQL · JavaScript · HTML/CSS · Apache
