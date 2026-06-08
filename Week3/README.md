@@ -1,4 +1,4 @@
-# PitStop Parts — Week 3: JavaScript and PHP Basics
+# PitStop Parts; Week 3: JavaScript and PHP Basics
 
 ## What was done this week
 - Added JavaScript form validation to Login (client-side before PHP)
