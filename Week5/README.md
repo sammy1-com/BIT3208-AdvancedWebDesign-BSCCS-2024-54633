@@ -1,4 +1,4 @@
-# PitStop Parts — Week 5: Database Components and CRUD Operations
+# PitStop Parts Week 5: Database Components and CRUD Operations
 
 ## What was done this week
 - Created full 7-table database schema in phpMyAdmin
@@ -24,9 +24,6 @@
 | AJAX model dropdown |  Fetch API |
 | Mobile responsive |  Bootstrap 5 grid |
 
-## Database setup
-1. Open `http://localhost/phpmyadmin`
-2. Click **Import** → Select `sql/pitstop.sql` → **Go**
 
 ## Admin login
 - **Email:** `admin@pitstopparts.co.ke`
