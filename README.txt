@@ -1,28 +1,5 @@
-PITSTOP PARTS — SETUP GUIDE
-============================
-
-STEP 1 — PLACE FILES
-Copy the entire pitstop/ folder into:
-C:\xampp\htdocs\pitstop\
-
-STEP 2 — IMPORT DATABASE
-Open phpMyAdmin at http://localhost/phpmyadmin
-Click Import, select pitstop/sql/pitstop.sql
-Click Go
-
-STEP 3 — OPEN SITE
-http://localhost/pitstop/index.php
-
-STEP 4 — ADMIN LOGIN
-URL:      http://localhost/pitstop/login.php
-Email:    admin@pitstopparts.co.ke
-Password: password
-
-STEP 5 — ADD PRODUCTS
-http://localhost/pitstop/admin/add-product.php
 
 FILE STRUCTURE
-==============
 pitstop/
   index.php           Homepage
   shop.php            Product catalogue
