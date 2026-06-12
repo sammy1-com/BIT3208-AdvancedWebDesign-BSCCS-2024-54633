@@ -14,3 +14,4 @@ PHP · MySQL · JavaScript · HTML/CSS · Apache
 
 ## Live Site
 https://pitstopparts.up.railway.app
+By: Samuel Njuguna BSCCS/2024/54633
