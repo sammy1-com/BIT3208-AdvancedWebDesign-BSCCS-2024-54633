@@ -2,15 +2,11 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
-
 if (is_logged_in()) redirect('/index.php');
-
 $error = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-
     if (!$email || !$password) {
         $error = 'Please fill in all fields.';
     } else {
@@ -19,12 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
-
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['role'] = $user['role'];
-            if ($user['role'] === 'admin') {
+            if (in_array($user['role'], ['admin', 'manager'], true)) {
                 redirect('/admin/index.php');
             } else {
                 redirect('/index.php');
@@ -54,31 +49,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if ($error): ?>
         <div class="alert-error"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-<form method="POST">
-    <label class="form-label">Email Address</label>
-    <input type="email" name="email" class="form-control" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
-    
-    <label class="form-label">Password</label>
-    <div style="display:flex;margin-bottom:20px;">
-        <input type="password" name="password" id="login-password" class="form-control" required 
-               style="width:auto;flex:1;margin-bottom:0;border-right:none;border-radius:2px 0 0 2px;">
-        <button type="button" onclick="togglePassword('login-password', 'toggle-icon')"
-                style="width:45px;background:var(--white);border:1px solid var(--linen);border-left:none;
-                       border-radius:0 2px 2px 0;cursor:pointer;
-                       display:flex;align-items:center;justify-content:center;">
-            <i class="fa-regular fa-eye" id="toggle-icon" style="color:#000;"></i>
-        </button>
-    </div>
-
-    <button type="submit" class="btn-submit">Sign In</button>
-</form>
-<div class="auth-switch">Don't have an account? <a href="/register.php">Register</a></div>
-<div class="auth-switch" style="margin-top:12px;">
-    <a href="/index.php" style="color:var(--taupe);">Back to Store</a>
-</div>
+        <form method="POST">
+            <label class="form-label">Email Address</label>
+            <input type="email" name="email" class="form-control" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+            <label class="form-label">Password</label>
+            <div style="display:flex;margin-bottom:20px;">
+                <input type="password" name="password" id="login-password" class="form-control" required
+                       style="width:auto;flex:1;margin-bottom:0;border-right:none;border-radius:2px 0 0 2px;">
+                <button type="button" onclick="togglePassword('login-password', 'toggle-icon')"
+                        style="width:45px;background:var(--white);border:1px solid var(--linen);border-left:none;
+                               border-radius:0 2px 2px 0;cursor:pointer;
+                               display:flex;align-items:center;justify-content:center;">
+                    <i class="fa-regular fa-eye" id="toggle-icon" style="color:#000;"></i>
+                </button>
+            </div>
+            <button type="submit" class="btn-submit">Sign In</button>
+        </form>
+        <div class="auth-switch">Don't have an account? <a href="/register.php">Register</a></div>
+        <div class="auth-switch" style="margin-top:12px;">
+            <a href="/index.php" style="color:var(--taupe);">Back to Store</a>
+        </div>
     </div>
 </div>
-    <script>
+<script>
 function togglePassword(inputId, iconId) {
     var input = document.getElementById(inputId);
     var icon = document.getElementById(iconId);
