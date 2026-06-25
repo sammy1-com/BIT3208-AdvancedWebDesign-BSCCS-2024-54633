@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
-require_admin();
+require_manager_or_above();
 
 $categories = get_categories($conn);
 $error = '';
@@ -74,6 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="/admin/products.php">Products</a>
             <a href="/admin/add-product.php" class="active">Add Product</a>
             <a href="/admin/orders.php">Orders</a>
+            <?php if (is_admin()): ?>
+            <a href="/admin/users.php">Manage Users</a>
+            <?php endif; ?>
             <a href="/index.php">View Store</a>
             <a href="/logout.php">Logout</a>
         </nav>
