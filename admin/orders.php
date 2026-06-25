@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
-require_admin();
+require_manager_or_above();
 
 if (isset($_POST['update_status'])) {
     $oid = (int)$_POST['order_id'];
@@ -43,6 +43,9 @@ $orders = $conn->query("SELECT o.*, u.name AS user_name FROM orders o LEFT JOIN 
             <a href="/admin/products.php">Products</a>
             <a href="/admin/add-product.php">Add Product</a>
             <a href="/admin/orders.php" class="active">Orders</a>
+            <?php if (is_admin()): ?>
+            <a href="/admin/users.php">Manage Users</a>
+            <?php endif; ?>
             <a href="/index.php">View Store</a>
             <a href="/logout.php">Logout</a>
         </nav>
@@ -62,7 +65,7 @@ $orders = $conn->query("SELECT o.*, u.name AS user_name FROM orders o LEFT JOIN 
                     </div>
                     <div>
                         <div style="font-family:var(--font-ui);font-size:9px;letter-spacing:2px;color:var(--taupe);text-transform:uppercase;margin-bottom:4px;">Customer</div>
-                        <div style="font-family:var(--font-body);font-size:17px;"><?php echo htmlspecialchars($order['user_name'] ?? $order['guest_email'] ?? 'Guest'); ?></div>
+                        <div style="font-family:var(--font-body);font-size:17px;"><?php echo htmlspecialchars($order['user_name'] ?? 'Guest'); ?></div>
                     </div>
                     <div>
                         <div style="font-family:var(--font-ui);font-size:9px;letter-spacing:2px;color:var(--taupe);text-transform:uppercase;margin-bottom:4px;">Total</div>
@@ -84,52 +87,56 @@ $orders = $conn->query("SELECT o.*, u.name AS user_name FROM orders o LEFT JOIN 
                     </select>
                     <button type="submit" name="update_status" class="btn-admin btn-admin-gold">Update Status</button>
                 </form>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th></tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($order_items as $item): ?>
+                            <tr>
+                                <td style="display:flex;align-items:center;gap:12px;">
+                                    <img src="/<?php echo htmlspecialchars($item['image_url']); ?>" style="width:48px;height:48px;object-fit:cover;border-radius:3px;">
+                                    <?php echo htmlspecialchars($item['product_name']); ?>
+                                </td>
+                                <td><?php echo format_price($item['price_at_purchase']); ?></td>
+                                <td><?php echo $item['quantity']; ?></td>
+                                <td><?php echo format_price($item['price_at_purchase'] * $item['quantity']); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <?php else: ?>
+            <div class="admin-table-wrap">
                 <table class="admin-table">
                     <thead>
-                        <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th></tr>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Shipping Name</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($order_items as $item): ?>
+                        <?php foreach ($orders as $o): ?>
                         <tr>
-                            <td style="display:flex;align-items:center;gap:12px;">
-                                <img src="/<?php echo htmlspecialchars($item['image_url']); ?>" style="width:48px;height:48px;object-fit:cover;border-radius:3px;">
-                                <?php echo htmlspecialchars($item['product_name']); ?>
-                            </td>
-                            <td><?php echo format_price($item['price_at_purchase']); ?></td>
-                            <td><?php echo $item['quantity']; ?></td>
-                            <td><?php echo format_price($item['price_at_purchase'] * $item['quantity']); ?></td>
+                            <td>#<?php echo $o['id']; ?></td>
+                            <td><?php echo htmlspecialchars($o['user_name'] ?? 'Guest'); ?></td>
+                            <td><?php echo htmlspecialchars($o['shipping_name']); ?></td>
+                            <td><?php echo format_price($o['total']); ?></td>
+                            <td><?php echo ucfirst($o['status']); ?></td>
+                            <td><?php echo date('d M Y', strtotime($o['created_at'])); ?></td>
+                            <td><a href="orders.php?id=<?php echo $o['id']; ?>" class="btn-admin btn-admin-gold">View</a></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php else: ?>
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Shipping Name</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($orders as $o): ?>
-                    <tr>
-                        <td>#<?php echo $o['id']; ?></td>
-                        <td><?php echo htmlspecialchars($o['user_name'] ?? 'Guest'); ?></td>
-                        <td><?php echo htmlspecialchars($o['shipping_name']); ?></td>
-                        <td><?php echo format_price($o['total']); ?></td>
-                        <td><?php echo ucfirst($o['status']); ?></td>
-                        <td><?php echo date('d M Y', strtotime($o['created_at'])); ?></td>
-                        <td><a href="orders.php?id=<?php echo $o['id']; ?>" class="btn-admin btn-admin-gold">View</a></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
             <?php endif; ?>
         </div>
     </main>
