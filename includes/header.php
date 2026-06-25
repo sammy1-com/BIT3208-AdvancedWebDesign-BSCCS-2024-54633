@@ -1,5 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) session_start();
+session_start();
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/functions.php';
 $cart_count = get_cart_count();
