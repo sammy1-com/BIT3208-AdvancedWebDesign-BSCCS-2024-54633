@@ -1,4 +1,5 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/functions.php';
 $cart_count = get_cart_count();
@@ -20,14 +21,11 @@ $base = '';
 <nav id="main-nav">
     <div class="nav-inner">
         <a href="<?php echo $base; ?>/index.php" class="nav-logo">Pit<span>Stop</span></a>
-
-        <!-- Hamburger toggle (mobile only) -->
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
             <span></span>
             <span></span>
             <span></span>
         </button>
-
         <ul class="nav-links" id="nav-links">
             <li><a href="<?php echo $base; ?>/index.php">Home</a></li>
             <li><a href="<?php echo $base; ?>/shop.php">Shop</a></li>
@@ -38,7 +36,6 @@ $base = '';
             <li><a href="<?php echo $base; ?>/my-orders.php">My Orders</a></li>
             <?php endif; ?>
         </ul>
-
         <div class="nav-actions" id="nav-actions">
             <a href="<?php echo $base; ?>/cart.php" class="nav-cart">
                 Cart
@@ -60,10 +57,9 @@ $base = '';
         </div>
     </div>
 </nav>
-
 <script>
 (function () {
-    var btn   = document.getElementById('nav-hamburger');
+    var btn = document.getElementById('nav-hamburger');
     var links = document.getElementById('nav-links');
     var actions = document.getElementById('nav-actions');
     if (!btn) return;
