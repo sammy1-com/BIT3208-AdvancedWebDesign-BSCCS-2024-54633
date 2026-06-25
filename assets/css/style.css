@@ -1578,3 +1578,35 @@ img {
     .stat-cards { grid-template-columns: 1fr 1fr; }
     .shop-header, .page-header { padding: 120px 30px 40px; }
 }
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:transparent;border:none;cursor:pointer;padding:0;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:#1a1a1a;transition:transform 0.2s,opacity 0.2s;}
+.nav-hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.nav-hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.role-badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;}
+.role-customer{background:#ECECEC;color:#555;}
+.role-manager{background:#FBE9C8;color:#8a5e0a;}
+.role-admin{background:#1a1a1a;color:#D4A853;}
+.admin-table-wrap{width:100%;overflow-x:auto;}
+.orders-list{display:flex;flex-direction:column;gap:20px;}
+.order-card{border:1px solid rgba(0,0,0,0.08);border-radius:8px;padding:20px;}
+.order-card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.08);}
+.order-number{font-family:var(--font-display);font-size:16px;}
+.order-date{font-size:13px;color:var(--taupe);}
+.order-status{padding:4px 12px;border-radius:4px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
+.order-status-pending{background:#FFF3CD;color:#856404;}
+.order-status-processing{background:#D1ECF1;color:#0c5460;}
+.order-status-shipped{background:#D4EDDA;color:#155724;}
+.order-status-delivered{background:#1a1a1a;color:#D4A853;}
+.order-status-cancelled{background:#F8D7DA;color:#721c24;}
+.order-item-row{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;color:var(--taupe);}
+.order-card-footer{display:flex;justify-content:space-between;font-weight:600;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.08);}
+@media(max-width:768px){
+    .nav-hamburger{display:flex;}
+    #nav-links.nav-open,#nav-actions.nav-open{display:flex;flex-direction:column;width:100%;}
+    #nav-links,#nav-actions{display:none;}
+    #main-nav .nav-inner{flex-wrap:wrap;}
+}
+@media(max-width:600px){
+    .products-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+}
