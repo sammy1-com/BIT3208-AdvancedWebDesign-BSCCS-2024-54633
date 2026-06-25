@@ -1,5 +1,8 @@
 <?php
-require_once 'includes/header.php';
+require_once 'includes/db.php';
+require_once 'includes/functions.php';
+
+session_start();
 
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 if (!$slug) {
@@ -17,17 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     $pid = (int)$product['id'];
     $qty = max(1, (int)($_POST['quantity'] ?? 1));
     if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
-    $_SESSION['cart'][$pid] = ($SESSION['cart'][$pid] ?? 0) + $qty;
-    if (!isset($_SESSION['cart'][$pid])) {
-        $_SESSION['cart'][$pid] = $qty;
-    } else {
-        $_SESSION['cart'][$pid] += $qty;
-    }
+    $_SESSION['cart'][$pid] = ($_SESSION['cart'][$pid] ?? 0) + $qty;
     redirect('/cart.php');
 }
 
 $related_result = $conn->query("SELECT * FROM products WHERE category_id = " . (int)$product['category_id'] . " AND id != " . (int)$product['id'] . " AND is_active = 1 LIMIT 4");
 $related = $related_result->fetch_all(MYSQLI_ASSOC);
+
+require_once 'includes/header.php';
 ?>
 
 <div class="product-detail">
