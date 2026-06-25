@@ -13,6 +13,6 @@ An e-commerce web app for a Kenyan auto parts store. Browse parts, search by veh
 PHP · MySQL · JavaScript · HTML/CSS · Apache
 
 ## Live Site
-https://pitstopparts.up.railway.app 
+https://pitstoppartske.up.railway.app 
 ## 
 By: Samuel Njuguna REG NO: BSCCS/2024/54633
