@@ -4,7 +4,7 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/functions.php';
 $cart_count = get_cart_count();
 $base = '';
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
