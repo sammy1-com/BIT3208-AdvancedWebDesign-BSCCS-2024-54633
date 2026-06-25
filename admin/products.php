@@ -2,8 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
-require_admin();
-
+require_manager_or_above();
 $products = $conn->query("SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.created_at DESC")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -25,6 +24,9 @@ $products = $conn->query("SELECT p.*, c.name AS category_name FROM products p LE
             <a href="/admin/products.php" class="active">Products</a>
             <a href="/admin/add-product.php">Add Product</a>
             <a href="/admin/orders.php">Orders</a>
+            <?php if (is_admin()): ?>
+            <a href="/admin/users.php">Manage Users</a>
+            <?php endif; ?>
             <a href="/index.php">View Store</a>
             <a href="/logout.php">Logout</a>
         </nav>
@@ -35,41 +37,41 @@ $products = $conn->query("SELECT p.*, c.name AS category_name FROM products p LE
             <a href="/admin/add-product.php" class="btn-admin btn-admin-gold">Add New Product</a>
         </div>
         <div class="admin-content">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Part No</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Stock</th>
-                        <th>Condition</th>
-                        <th>Featured</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($products as $p): ?>
-                    <tr>
-                        <td>
-                            <img src="/<?php echo htmlspecialchars($p['image_url']); ?>" alt="" style="width:56px;height:56px;object-fit:cover;border-radius:3px;">
-                        </td>
-                        <td style="font-family:var(--font-body);font-size:16px;max-width:200px;"><?php echo htmlspecialchars($p['name']); ?></td>
-                        <td style="font-family:var(--font-ui);font-size:10px;letter-spacing:1px;"><?php echo htmlspecialchars($p['part_number']); ?></td>
-                        <td><?php echo htmlspecialchars($p['category_name'] ?? '-'); ?></td>
-                        <td><?php echo format_price($p['price']); ?></td>
-                        <td><?php echo $p['stock']; ?></td>
-                        <td><?php echo ucfirst($p['condition_type']); ?></td>
-                        <td><?php echo $p['is_featured'] ? 'Yes' : 'No'; ?></td>
-                        <td style="white-space:nowrap;">
-                            <a href="/admin/edit-product.php?id=<?php echo $p['id']; ?>" class="btn-admin btn-admin-dark" style="margin-right:6px;">Edit</a>
-                            <a href="/admin/delete-product.php?id=<?php echo $p['id']; ?>" class="btn-admin btn-admin-danger" onclick="return confirm('Delete this product?')">Delete</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Part No</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Condition</th>
+                            <th>Featured</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($products as $p): ?>
+                        <tr>
+                            <td><img src="/<?php echo htmlspecialchars($p['image_url']); ?>" alt="" style="width:56px;height:56px;object-fit:cover;border-radius:3px;"></td>
+                            <td style="font-family:var(--font-body);font-size:16px;max-width:200px;"><?php echo htmlspecialchars($p['name']); ?></td>
+                            <td style="font-family:var(--font-ui);font-size:10px;letter-spacing:1px;"><?php echo htmlspecialchars($p['part_number']); ?></td>
+                            <td><?php echo htmlspecialchars($p['category_name'] ?? '-'); ?></td>
+                            <td><?php echo format_price($p['price']); ?></td>
+                            <td><?php echo $p['stock']; ?></td>
+                            <td><?php echo ucfirst($p['condition_type']); ?></td>
+                            <td><?php echo $p['is_featured'] ? 'Yes' : 'No'; ?></td>
+                            <td style="white-space:nowrap;">
+                                <a href="/admin/edit-product.php?id=<?php echo $p['id']; ?>" class="btn-admin btn-admin-dark" style="margin-right:6px;">Edit</a>
+                                <a href="/admin/delete-product.php?id=<?php echo $p['id']; ?>" class="btn-admin btn-admin-danger" onclick="return confirm('Delete this product?')">Delete</a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 </div>
